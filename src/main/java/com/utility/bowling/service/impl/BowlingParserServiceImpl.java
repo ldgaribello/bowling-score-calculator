@@ -1,17 +1,18 @@
-package com.utility.bowling.service;
+package com.utility.bowling.service.impl;
 
 import com.utility.bowling.model.PlayerAttempt;
+import com.utility.bowling.service.BowlingParserService;
 import com.utility.bowling.util.ValidationUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class BowlingParserServiceImpl implements BowlingParserService {
 
     public Map<String, List<PlayerAttempt>> parseScoreLines(List<String> scoreFileLines) {
-        Map<String, List<PlayerAttempt>> attempsByPlayer = new HashMap<>();
+        Map<String, List<PlayerAttempt>> attemptsByPlayer = new HashMap<>();
 
         int currentLine = 0;
         for (String scoreFileLine : scoreFileLines) {
@@ -21,6 +22,7 @@ public class BowlingParserServiceImpl implements BowlingParserService {
 
             String playerName;
             PlayerAttempt playerAttempt = new PlayerAttempt();
+            playerAttempt.setAttemptNumber(currentLine);
 
             if (scoreLineDetail.length == 0) {
                 System.err.println("No data in line: " + currentLine);
@@ -52,11 +54,11 @@ public class BowlingParserServiceImpl implements BowlingParserService {
                     playerAttempt.setErrorDescription("Not valid score value in line: " + currentLine);
                 }
             }
-            List<PlayerAttempt> currentPlayerAttempts = attempsByPlayer.getOrDefault(playerName, new ArrayList<>());
+            List<PlayerAttempt> currentPlayerAttempts = attemptsByPlayer.getOrDefault(playerName, new LinkedList<>());
             currentPlayerAttempts.add(playerAttempt);
-            attempsByPlayer.put(playerName, currentPlayerAttempts);
+            attemptsByPlayer.put(playerName, currentPlayerAttempts);
 
         }
-        return attempsByPlayer;
+        return attemptsByPlayer;
     }
 }
