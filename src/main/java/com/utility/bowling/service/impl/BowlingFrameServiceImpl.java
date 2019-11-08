@@ -11,7 +11,7 @@ import java.util.List;
 public class BowlingFrameServiceImpl implements BowlingFrameService {
 
     @Override
-    public List<PlayerFrame> aggregateFrames(List<PlayerAttempt> playerAttempts) {
+    public List<PlayerFrame> aggregatePins(List<PlayerAttempt> playerAttempts) {
         int currentPins = 0;
         int currentChance = 1;
         int currentFrame = 1;
