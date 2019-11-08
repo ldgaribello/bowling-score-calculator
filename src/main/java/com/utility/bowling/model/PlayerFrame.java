@@ -6,6 +6,7 @@ public class PlayerFrame {
     private AttemptPins attemptPins1;
     private AttemptPins attemptPins2;
     private AttemptPins attemptPins3;
+    private FrameScore frameScore;
 
     public PlayerFrame(int frameNumber){
         this.frameNumber = frameNumber;
@@ -41,5 +42,13 @@ public class PlayerFrame {
 
     public void setFrameNumber(int frameNumber) {
         this.frameNumber = frameNumber;
+    }
+
+    public FrameScore getFrameScore() {
+        return frameScore;
+    }
+
+    public void setFrameScore(FrameScore frameScore) {
+        this.frameScore = frameScore;
     }
 }

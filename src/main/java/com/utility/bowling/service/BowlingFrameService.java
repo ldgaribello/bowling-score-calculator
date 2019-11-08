@@ -8,9 +8,9 @@ import java.util.List;
 public interface BowlingFrameService {
 
     /**
-     * Calculate the score given a list of attempts corresponding to a single player.
+     * Aggregate the pins given a list of attempts corresponding to a single player.
      *
      * @param playerAttempts One player attempts
      */
-    List<PlayerFrame> aggregateFrames(List<PlayerAttempt> playerAttempts);
+    List<PlayerFrame> aggregatePins(List<PlayerAttempt> playerAttempts);
 }

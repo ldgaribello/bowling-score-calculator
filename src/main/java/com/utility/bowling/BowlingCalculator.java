@@ -4,8 +4,10 @@ import com.utility.bowling.model.PlayerAttempt;
 import com.utility.bowling.model.PlayerFrame;
 import com.utility.bowling.service.BowlingFrameService;
 import com.utility.bowling.service.BowlingParserService;
+import com.utility.bowling.service.BowlingScoreService;
 import com.utility.bowling.service.impl.BowlingFrameServiceImpl;
 import com.utility.bowling.service.impl.BowlingParserServiceImpl;
+import com.utility.bowling.service.impl.BowlingScoreServiceImpl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,6 +25,7 @@ public class BowlingCalculator {
     public static void main(String[] args) throws Exception {
         BowlingParserService bowlingParserService = new BowlingParserServiceImpl();
         BowlingFrameService bowlingFrameService = new BowlingFrameServiceImpl();
+        BowlingScoreService bowlingScoreService = new BowlingScoreServiceImpl();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -41,15 +44,21 @@ public class BowlingCalculator {
         // Parse lines
         Map<String, List<PlayerAttempt>> playerAttempts = bowlingParserService.parseScoreLines(lines);
 
-        // Aggregate Frames
         Map<String, List<PlayerFrame>> playerFrames = new HashMap<>();
-        playerAttempts.forEach((player, attempts) -> playerFrames.put(player, bowlingFrameService.aggregateFrames(attempts)));
+        playerAttempts.forEach((player, attempts) -> {
+            // Aggregate Frames
+            List<PlayerFrame> frames = bowlingFrameService.aggregatePins(attempts);
+            // Process Score
+            bowlingScoreService.processPlayerFrames(frames);
+
+            playerFrames.put(player, frames);
+        });
 
         System.out.println("Frame\t\t1\t\t\t2\t\t\t3\t\t\t4\t\t\t5\t\t\t6\t\t\t7\t\t\t8\t\t\t9\t\t\t10\t\t\t");
         playerFrames.forEach((player, frames) -> {
-            System.out.println("\n" + player);
+            System.out.print("\n\n" + player);
 
-            System.out.print("Pins\t\t");
+            System.out.print("\nPins\t\t");
             for (PlayerFrame frame : frames) {
                 if (frame.getAttemptPins1() != null) {
                     System.out.print(frame.getAttemptPins1().getSymbol());
@@ -66,10 +75,16 @@ public class BowlingCalculator {
                 }
                 System.out.print("\t");
             }
-            System.out.println();
+
+            int totalScore = 0;
+            System.out.print("\nScore\t\t");
+            for (PlayerFrame frame : frames) {
+                totalScore += frame.getFrameScore().getScore();
+                System.out.print(totalScore + "\t\t\t");
+            }
         });
-        System.out.println("\n('X') Strike, ('/') Spare, ('F') Fault, ('E') Error");
-        System.out.println("\n\nPress Enter key to continue...");
+        System.out.print("\n\n('X') Strike, ('/') Spare, ('F') Fault, ('E') Error");
+        System.out.print("\n\n\n\nPress Enter key to continue...\n");
         System.in.read();
     }
 }
