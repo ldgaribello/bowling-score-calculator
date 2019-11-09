@@ -15,4 +15,6 @@ The Bowling Score Calculator will ask you for a file with the game score; you ca
 ```
 ./score-files/challenge-game.txt
 ./score-files/perfect-game.txt
+./score-files/error-data-game.txt
+./score-files/three-players-game.txt
 ```

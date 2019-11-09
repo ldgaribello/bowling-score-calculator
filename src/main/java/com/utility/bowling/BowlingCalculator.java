@@ -54,11 +54,11 @@ public class BowlingCalculator {
             playerFrames.put(player, frames);
         });
 
-        System.out.println("Frame\t\t1\t\t\t2\t\t\t3\t\t\t4\t\t\t5\t\t\t6\t\t\t7\t\t\t8\t\t\t9\t\t\t10\t\t\t");
+        System.out.println("Frame\t1\t\t2\t\t3\t\t4\t\t5\t\t6\t\t7\t\t8\t\t9\t\t10\t");
         playerFrames.forEach((player, frames) -> {
-            System.out.print("\n\n" + player);
+            System.out.print("\n" + player);
 
-            System.out.print("\nPins\t\t");
+            System.out.print("\nPins\t");
             for (PlayerFrame frame : frames) {
                 if (frame.getAttemptPins1() != null) {
                     System.out.print(frame.getAttemptPins1().getSymbol());
@@ -73,14 +73,13 @@ public class BowlingCalculator {
                 if (frame.getFrameNumber() == 10 && frame.getAttemptPins3() != null) {
                     System.out.print(frame.getAttemptPins3().getSymbol());
                 }
-                System.out.print("\t");
             }
 
             int totalScore = 0;
-            System.out.print("\nScore\t\t");
+            System.out.print("\nScore\t");
             for (PlayerFrame frame : frames) {
                 totalScore += frame.getFrameScore().getScore();
-                System.out.print(totalScore + "\t\t\t");
+                System.out.print(totalScore + "\t\t");
             }
         });
         System.out.print("\n\n('X') Strike, ('/') Spare, ('F') Fault, ('E') Error");
