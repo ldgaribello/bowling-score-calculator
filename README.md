@@ -10,6 +10,13 @@ mvn package
 java -jar target/bowling-score-calculator-1.0-SNAPSHOT.jar
 ```
 
+## How to test
+To execute Bowling Score Calculator unit tests, execute the following command:
+
+```
+mvn verify
+```
+
 ## Example files
 The Bowling Score Calculator will ask you for a file with the game score; you can use the following included tests files:
 ```
